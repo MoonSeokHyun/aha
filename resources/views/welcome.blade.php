@@ -21,6 +21,6 @@
         </style>
     </head>
     <body class="antialiased">
-            Hello world
+            Hello 지비스콘
     </body>
 </html>
