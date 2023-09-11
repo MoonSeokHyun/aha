@@ -19,6 +19,6 @@ class GameResultController extends Controller
     GROUP BY trimmed_team1, trimmed_team2
     ");
 
-    return view('win_rate', ['results' => $results]);
+    return view('game.win_rate', ['results' => $results]);
 }
 }
