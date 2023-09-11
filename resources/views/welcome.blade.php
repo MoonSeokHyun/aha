@@ -20,7 +20,9 @@
             }
         </style>
     </head>
-    <body class="antialiased">
-            Hello World!
-    </body>
+<body class="antialiased">
+    Hello World!
+    <button onclick="window.location.href='/win-rate'">Go to Win Rate</button>
+</body>
+
 </html>
