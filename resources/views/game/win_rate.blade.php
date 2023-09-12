@@ -25,5 +25,6 @@
         </tr>
         @endforeach
     </table>
+    <button onclick="window.location.href='/add-game-results'">Go to Game wirte</button>
 </body>
 </html>
