@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameResultController;
 use App\Http\Controllers\ChildcareCenterController;
-
+use App\Http\Controllers\KindergartenController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,3 +24,9 @@ Route::post('/save-game-results', [GameResultController::class, 'saveGameResults
 // 어린이집 childcenter board
 Route::get('/childcare', [ChildcareCenterController::class, 'index']);
 Route::get('/childcare/{id}', [ChildcareCenterController::class, 'show']);
+
+
+// 유치원
+
+Route::get('/kindergartens', [KindergartenController::class, 'index']);
+Route::get('/kindergartens/{id}',[KindergartenController::class, 'show']);

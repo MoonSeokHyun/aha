@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="container">
+    <h1 class="text-center">어린이집</h1>
     <div class="row" id="post-data">
         @foreach($centers as $center)
         <div class="col-md-4">
