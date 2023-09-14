@@ -56,15 +56,16 @@ $(document).ready(function() {
     function renderData(data) {
         let html = '';
         for(let item of data) {
+            console.log(item);
             html += `<div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${item.name}</h5>
-                                <p class="card-text">${item.address}</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.name}</h5>
+                            <p class="card-text">${item.address}</p>
+                            <a href="/childcare/${item.id}" class="btn btn-primary">Go somewhere</a>
                         </div>
-                    </div>`;
+                    </div>
+                </div>`;
         }
         return html;
     }
