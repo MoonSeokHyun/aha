@@ -23,3 +23,4 @@ Route::post('/save-game-results', [GameResultController::class, 'saveGameResults
 
 // 어린이집 childcenter board
 Route::get('/childcare', [ChildcareCenterController::class, 'index']);
+Route::get('/childcare/{id}', [ChildcareCenterController::class, 'show']);

@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <div class="container">
     <div class="row" id="post-data">
         @foreach($centers as $center)
@@ -11,7 +10,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $center->name }}</h5>
                     <p class="card-text">{{ $center->address }}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="/childcare/{{ $center->id }}" class="btn btn-primary">View Details</a>
                 </div>
             </div>
         </div>

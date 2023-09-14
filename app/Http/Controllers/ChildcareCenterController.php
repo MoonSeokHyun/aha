@@ -17,4 +17,13 @@ class ChildcareCenterController extends Controller
         $centers = ChildcareCenter::paginate(10);
         return view('childcare.index', compact('centers'));
     }
+    public function show($id)
+{
+    $center = ChildcareCenter::find($id);
+    if ($center === null) {
+        return redirect('/childcare')->with('error', 'Center not found');
+    }
+    return view('childcare.show', compact('center'));
 }
+}
+
