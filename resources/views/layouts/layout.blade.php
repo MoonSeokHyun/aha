@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Landing Page - Start Bootstrap Theme</title>
+        <title>교육기관에 대한 정보는 EduRanking!</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -13,14 +13,30 @@
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     </head>
     <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-light bg-light static-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light static-top navbar-static-top">
             <div class="container">
-                <a class="navbar-brand" href="#!">Start Bootstrap</a>
-                <a class="btn btn-primary" href="#signup">Sign Up</a>
+                <a class="navbar-brand custom-brand" href="#!">EduRanking</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item mx-3 custom-nav-item">
+                            <a class="nav-link custom-nav-link" href="/childcare">어린이집</a>
+                        </li>
+                        <li class="nav-item mx-3 custom-nav-item">
+                            <a class="nav-link custom-nav-link" href="#">유치원</a>
+                        </li>
+                        <li class="nav-item mx-3 custom-nav-item">
+                            <a class="nav-link custom-nav-link" href="#">학원</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
         <!-- Masthead-->

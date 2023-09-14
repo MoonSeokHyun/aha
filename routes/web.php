@@ -2,18 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameResultController;
+use App\Http\Controllers\ChildcareCenterController;
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,3 +19,7 @@ Route::get('/add-game-results', function () {
 
 // 저장 
 Route::post('/save-game-results', [GameResultController::class, 'saveGameResults']);
+
+
+// 어린이집 childcenter board
+Route::get('/childcare', [ChildcareCenterController::class, 'index']);
