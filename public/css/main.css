@@ -1,0 +1,35 @@
+/* Reset some default browser styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Make a header */
+header {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ccc;
+    height: 60px;
+}
+
+header h1 {
+    font-size: 24px;
+    line-height: 60px;
+    margin-left: 20px;
+}
+
+/* Style for main content */
+main {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    min-height: calc(100vh - 100px); /* 100px = 60px header + 40px footer */
+}
+
+/* Style for footer */
+footer {
+    background-color: black;
+    border-top: 1px solid #ccc;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+}
