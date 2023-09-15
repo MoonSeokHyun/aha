@@ -9,14 +9,21 @@ class ChildcareCenterController extends Controller
 {
     public function index(Request $request)
     {
+        $query = ChildcareCenter::query();
+    
         if ($request->ajax()) {
-            $centers = ChildcareCenter::paginate(10);
+            if ($request->has('region')) {
+                $query->where('address', 'like', '%' . $request->region . '%');
+            }
+            $centers = $query->paginate(10);
             return response()->json($centers);
         }
-
-        $centers = ChildcareCenter::paginate(10);
+    
+        $centers = $query->paginate(10);
         return view('childcare.index', compact('centers'));
     }
+
+
     public function show($id)
 {
     $center = ChildcareCenter::find($id);
