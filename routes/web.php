@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameResultController;
 use App\Http\Controllers\ChildcareCenterController;
 use App\Http\Controllers\KindergartenController;
+use App\Http\Controllers\AcademyInfoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,3 +31,6 @@ Route::get('/childcare/{id}', [ChildcareCenterController::class, 'show']);
 
 Route::get('/kindergartens', [KindergartenController::class, 'index']);
 Route::get('/kindergartens/{id}',[KindergartenController::class, 'show']);
+
+// 학원
+Route::get('/academy_info', [AcademyInfoController::class, 'index']);

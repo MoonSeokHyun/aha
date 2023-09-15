@@ -33,7 +33,7 @@
                             <a class="nav-link custom-nav-link" href="/kindergartens">유치원</a>
                         </li>
                         <li class="nav-item mx-3 custom-nav-item">
-                            <a class="nav-link custom-nav-link" href="#">학원</a>
+                            <a class="nav-link custom-nav-link" href="/academy_info">학원</a>
                         </li>
                     </ul>
                 </div>
