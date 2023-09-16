@@ -30,13 +30,65 @@
     </table>
     <a href="/childcare" class="btn btn-primary mt-3">Back to List</a>
 </div>
+<!--네이버 지도 api-->
+<div style="display: flex; justify-content: center;">
+    <div id="map" style="width:80%; height:400px;"></div>
+</div>
 
-<div id="map" style="width:100%;height:400px;"></div>
 
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLIENT_ID') }}&callback=initMap"></script>
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLIENT_ID') }}&submodules=geocoder"></script>
+<!-- Bootstrap Container -->
+<div id="post-data" class="container mt-5">
+    <div class="row">
+        <!-- 여기에 검색 결과를 출력 -->
+    </div>
+</div>
 
 <script>
+    const centerName = "{{ $center->name }}";  // Blade 문법을 활용하여 PHP 변수의 값을 가져옵니다.
+
+    function renderData() {
+        const reviewQuery = centerName + " 후기";
+
+        $.ajax({
+            url: "/api/search",
+            type: 'get',
+            data: { query: reviewQuery, display: 12 },
+            success: function(searchData) {
+                const searchItems = JSON.parse(searchData).items;
+                
+                // Bootstrap Row를 초기화
+                let row = $('#post-data .row');
+                row.empty();
+
+                for (const searchItem of searchItems) {
+                    const searchTitle = searchItem.title;
+                    const searchLink = searchItem.link;
+
+                    // Bootstrap Card 형태로 HTML 작성
+                    const html = `<div class="col-md-4">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><a href="${searchLink}" target="_blank">${searchTitle}</a></h5>
+                                        </div>
+                                    </div>
+                                  </div>`;
+                    
+                    row.append(html);
+                }
+            },
+            error: function() {
+                alert("검색 API 호출 실패");
+            }
+        });
+    }
+
+    renderData();
+</script>
+
+
+
+<script>
+    
     function initMap() {
         var mapOptions = {
             center: new naver.maps.LatLng(37.5665, 126.9780),
