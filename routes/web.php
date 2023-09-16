@@ -34,3 +34,4 @@ Route::get('/kindergartens/{id}',[KindergartenController::class, 'show']);
 
 // 학원
 Route::get('/academy_info', [AcademyInfoController::class, 'index']);
+Route::get('/academy_info/{id}', [AcademyInfoController::class, 'show']);

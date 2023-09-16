@@ -12,4 +12,10 @@ class AcademyInfoController extends Controller
         $academyInfos = AcademyInfo::paginate(20);
         return view('academy.index', compact('academyInfos'));
     }    
+
+    public function show($id)
+    {
+        $academyInfo = AcademyInfo::find($id);
+        return view('academy.show', ['academyInfo' => $academyInfo]);
+    }
 }
