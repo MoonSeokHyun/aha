@@ -28,9 +28,9 @@
 </div>
 
 <script>
-  function goToDetailPage(id) {
-    window.location.href = `/academyInfos/${id}`;
-  }
+function goToDetailPage(id) {
+  window.location.href = `/academy_info/${id}`;
+}
 </script>
 
 @endsection

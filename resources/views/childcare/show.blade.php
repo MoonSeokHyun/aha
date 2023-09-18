@@ -1,29 +1,43 @@
 @extends('layouts.layout')
-@section('title', $center->name )
-@section('content')
 
+@section('meta')
+    <meta name="description" content="{{ $center->name }}의 정보와 위치 등">
+    <meta property="og:title" content="{{ $center->name }}" />
+    <meta property="og:description" content="{{ $center->address }}" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+@endsection
+
+@php
+    $address_parts = explode(" ", $center->address);
+    $simplified_address = $address_parts[0] . " " . $address_parts[1] . " " . $address_parts[2];
+@endphp
+
+@section('title', $simplified_address . ' ' . $center->name . ' ' . $center->type . '어린이집')
+
+
+@section('content')
 <div class="container mt-5">
     <h1 class="display-4">{{ $center->name }}</h1>
     <table class="table">
         <tbody>
             <tr>
-                <th scope="row">Name</th>
+                <th scope="row">어린이집</th>
                 <td>{{ $center->name }}</td>
             </tr>
             <tr>
-                <th scope="row">Type</th>
+                <th scope="row">타입</th>
                 <td>{{ $center->type }}</td>
             </tr>
             <tr>
-                <th scope="row">Address</th>
+                <th scope="row">주소</th>
                 <td>{{ $center->address }}</td>
             </tr>
             <tr>
-                <th scope="row">Capacity</th>
+                <th scope="row">정원</th>
                 <td>{{ $center->capacity }}</td>
             </tr>
             <tr>
-                <th scope="row">Current Number</th>
+                <th scope="row">현 정원</th>
                 <td>{{ $center->current_number }}</td>
             </tr>
         </tbody>

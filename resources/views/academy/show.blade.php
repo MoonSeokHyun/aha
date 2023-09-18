@@ -1,6 +1,20 @@
 @extends('layouts.layout')
 
-@section('title', $academyInfo->''academy_name'')
+@section('meta')
+    <meta name="description" content="{{ $academyInfo->academy_name }}의 정보와 위치 등">
+    <meta property="og:title" content="{{ $academyInfo->academy_name }}" />
+    <meta property="og:description" content="{{ $academyInfo->road_name_address }}" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+@endsection
+
+@php
+    $address_parts = explode(" ", $academyInfo->road_name_address);
+    $simplified_address = $address_parts[0] . " " . $address_parts[1] . " " . $address_parts[2];
+@endphp
+
+@section('title', $simplified_address . ' ' . $academyInfo->academy_name . ' ' . $academyInfo->field_name)
+
+@section('content')
 @section('content')
     <h1>{{ $academyInfo->academy_name }}</h1>
     <table class="table table-bordered">
