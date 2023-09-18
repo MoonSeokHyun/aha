@@ -14,6 +14,9 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLIENT_ID') }}&callback=initMap"></script>
+        <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLIENT_ID') }}&submodules=geocoder"></script>
+
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
         <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLIENT_ID') }}&callback=initMap"></script>
         <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLIENT_ID') }}&submodules=geocoder"></script>
@@ -22,7 +25,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light static-top navbar-static-top">
             <div class="container">
-                <a class="navbar-brand custom-brand" href="#!">EduRanking</a>
+                <a class="navbar-brand custom-brand" href="/">EduRanking</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
