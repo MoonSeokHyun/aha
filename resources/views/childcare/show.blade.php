@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-
+@section('title', $center->name )
 @section('content')
 
 <div class="container mt-5">

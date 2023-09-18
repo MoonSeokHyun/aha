@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-
+@section('title', $academyInfo->''academy_name'')
 @section('content')
     <h1>{{ $academyInfo->academy_name }}</h1>
     <table class="table table-bordered">
