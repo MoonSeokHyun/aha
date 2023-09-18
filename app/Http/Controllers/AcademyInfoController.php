@@ -9,7 +9,7 @@ class AcademyInfoController extends Controller
 {
     public function index()
     {
-        $academyInfos = AcademyInfo::paginate(20);
+        $academyInfos = AcademyInfo::paginate(15);
         return view('academy.index', compact('academyInfos'));
     }    
 }

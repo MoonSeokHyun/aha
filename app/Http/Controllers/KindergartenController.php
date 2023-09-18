@@ -10,10 +10,10 @@ class KindergartenController extends Controller
 
     public function index()
     {
-        $kindergartens = Kindergarten::all();
-        return view('kindergarten.index', ['kindergartens' => $kindergartens]);
+        $kindergartens = Kindergarten::paginate(15);
+        return view('kindergarten.index', compact('kindergartens'));
     }
-    
+
     public function show($id)
 {
     $kindergarten = Kindergarten::find($id);

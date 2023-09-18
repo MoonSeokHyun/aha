@@ -21,7 +21,9 @@
         </tbody>
     </table>
 </div>
-
+<div class="d-flex justify-content-center">
+    {{ $kindergartens->links('pagination::bootstrap-4') }}
+    </div>
 <script>
   function goToDetailPage(id) {
     window.location.href = `/kindergartens/${id}`;

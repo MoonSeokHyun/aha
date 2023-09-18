@@ -15,6 +15,8 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+        <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLIENT_ID') }}&callback=initMap"></script>
+        <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLIENT_ID') }}&submodules=geocoder"></script>
     </head>
     <body>
         <!-- Navigation-->
