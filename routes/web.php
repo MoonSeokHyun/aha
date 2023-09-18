@@ -5,33 +5,39 @@ use App\Http\Controllers\GameResultController;
 use App\Http\Controllers\ChildcareCenterController;
 use App\Http\Controllers\KindergartenController;
 use App\Http\Controllers\AcademyInfoController;
+use App\Http\Controllers\SitemapController;
 
+// Welcome Page
 Route::get('/', function () {
     return view('welcome');
 });
 
-// 게임 결과 이동
-Route::get('/win-rate', [GameResultController::class, 'showWinRate']);
-// 게임 입력
-Route::get('/add-game-results', function () {
-    return view('game.add_game_results');  
+// Game Results
+Route::group(['prefix' => 'win-rate'], function () {
+    Route::get('/', [GameResultController::class, 'showWinRate']);
+    Route::get('/add', function () {
+        return view('game.add_game_results');
+    });
+    Route::post('/save', [GameResultController::class, 'saveGameResults']);
 });
 
+// Childcare Centers
+Route::group(['prefix' => 'childcare'], function () {
+    Route::get('/', [ChildcareCenterController::class, 'index']);
+    Route::get('/{id}', [ChildcareCenterController::class, 'show']);
+});
 
-// 저장 
-Route::post('/save-game-results', [GameResultController::class, 'saveGameResults']);
+// Kindergartens
+Route::group(['prefix' => 'kindergartens'], function () {
+    Route::get('/', [KindergartenController::class, 'index']);
+    Route::get('/{id}', [KindergartenController::class, 'show']);
+});
 
+// Academy Info
+Route::group(['prefix' => 'academy_info'], function () {
+    Route::get('/', [AcademyInfoController::class, 'index']);
+    Route::get('/{id}', [AcademyInfoController::class, 'show']);
+});
 
-// 어린이집 childcenter board
-Route::get('/childcare', [ChildcareCenterController::class, 'index']);
-Route::get('/childcare/{id}', [ChildcareCenterController::class, 'show']);
-
-
-// 유치원
-
-Route::get('/kindergartens', [KindergartenController::class, 'index']);
-Route::get('/kindergartens/{id}',[KindergartenController::class, 'show']);
-
-// 학원
-Route::get('/academy_info', [AcademyInfoController::class, 'index']);
-Route::get('/academy_info/{id}', [AcademyInfoController::class, 'show']);
+// Sitemap
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
