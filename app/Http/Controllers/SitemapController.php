@@ -13,7 +13,7 @@ class SitemapController extends Controller
     {
         $sitemapIndex = [];
         $fileCount = 1;
-        $chunkSize = 2000;
+        $chunkSize = 20000;
 
         // 어린이집 정보 추가
         $this->processData(ChildcareCenter::query(), 'childcare', $chunkSize, $sitemapIndex, $fileCount);
