@@ -40,4 +40,4 @@ Route::group(['prefix' => 'academy_info'], function () {
 });
 
 // Sitemap
-Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/sitemap.xml.gz', [SitemapController::class, 'index']);
