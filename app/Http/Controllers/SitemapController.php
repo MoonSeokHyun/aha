@@ -13,7 +13,7 @@ class SitemapController extends Controller
     {
         $sitemapIndex = [];
         $fileCount = 1;
-        $chunkSize = 20000;
+        $chunkSize = 2000;
 
         // 어린이집 정보 추가
         $this->processData(ChildcareCenter::query(), 'childcare', $chunkSize, $sitemapIndex, $fileCount);
@@ -23,6 +23,9 @@ class SitemapController extends Controller
 
         // 학원 정보 추가
         $this->processData(AcademyInfo::query(), 'academy_info', $chunkSize, $sitemapIndex, $fileCount);
+
+        // 중복 제거
+        $sitemapIndex = array_unique($sitemapIndex);
 
         // Write sitemap index
         $sitemapIndexXml = view('sitemap_index', ['sitemaps' => $sitemapIndex])->render();
@@ -62,6 +65,7 @@ class SitemapController extends Controller
         if ($count > 0) {
             $this->writeSitemap($urls, $fileCount);
             $sitemapIndex[] = url("sitemap{$fileCount}.xml.gz");
+            $fileCount++;
         }
     }
 
