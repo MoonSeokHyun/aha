@@ -47,41 +47,4 @@
                 </div>
             </div>
         </section>
-        <section>
-            <div style="text-align: center; margin-bottom: 20px;">
-                <h2>내 주변 교육기관 알아보기</h2>
-            </div>
-            <div id="map" style="width:100%;height:400px;"></div>
-        </section>
-        
-
-        <script>
-            var mapOptions = {
-                center: new naver.maps.LatLng(37.5665, 126.9780), // 초기 위치: 서울시청
-                zoom: 11
-            };
-    
-            var map = new naver.maps.Map('map', mapOptions);
-    
-            // HTML5의 geolocation으로 사용할 수 있는지 확인합니다.
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var lat = position.coords.latitude,
-                        lon = position.coords.longitude;
-    
-                    var location = new naver.maps.LatLng(lat, lon);
-    
-                    map.setCenter(location); // 얻은 좌표를 지도의 중심으로 설정합니다.
-                    map.setZoom(15); // 지도의 줌 레벨을 변경합니다.
-    
-                    // 지도에 마커를 표시합니다.
-                    new naver.maps.Marker({
-                        map: map,
-                        position: location
-                    });
-                });
-            } else {
-                alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
-            }
-        </script>
         @endsection
