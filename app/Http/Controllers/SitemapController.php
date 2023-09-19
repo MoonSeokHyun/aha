@@ -39,36 +39,35 @@ class SitemapController extends Controller
     {
         $count = 0;
         $urls = [];
-    
+
         $query->chunk($chunkSize, function ($items) use (&$count, &$urls, &$fileCount, &$sitemapIndex, $pathSegment) {
             foreach ($items as $item) {
                 $count++;
                 $lastmod = $item->updated_at ? $item->updated_at->toAtomString() : now()->toAtomString();
                 $urls[] = [
-                    'loc' => 'https://rankingedu.shop/' . $pathSegment . '/' . $item->id,
+                    'loc' => url("/$pathSegment/" . $item->id),
                     'lastmod' => $lastmod,
                     'changefreq' => 'weekly',
                     'priority' => '0.8',
                 ];
-    
+
                 if ($count >= 50000) {
                     $this->writeSitemap($urls, $fileCount);
-                    $sitemapIndex[] = 'https://rankingedu.shop/sitemap' . $fileCount . '.xml.gz';
+                    $sitemapIndex[] = url("sitemap{$fileCount}.xml.gz");
                     $urls = [];
                     $count = 0;
                     $fileCount++;
                 }
             }
         });
-    
+
         // If there are remaining URLs that haven't been written, write them
         if ($count > 0) {
             $this->writeSitemap($urls, $fileCount);
-            $sitemapIndex[] = 'https://rankingedu.shop/sitemap' . $fileCount . '.xml.gz';
+            $sitemapIndex[] = url("sitemap{$fileCount}.xml.gz");
             $fileCount++;
         }
     }
-    
 
     private function writeSitemap($urls, $fileCount)
     {
