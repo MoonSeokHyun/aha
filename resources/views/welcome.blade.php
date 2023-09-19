@@ -57,43 +57,43 @@
 
         <div id="result"></div>
 
-
-        <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // 현재 위치를 가져옵니다.
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var lat = position.coords.latitude,
-            lng = position.coords.longitude;
-        
-        // 좌표를 console에 출력
-        console.log("Latitude: " + lat + ", Longitude: " + lng);
-
-        var mapOptions = {
-            center: new naver.maps.LatLng(lat, lng),
-            zoom: 10
-        };
-
-        var map = new naver.maps.Map('map', mapOptions);
-        var geocoder = new naver.maps.Service.Geocoder();
-
-        // Naver 리버스 지오코딩 API를 사용하여 좌표로부터 주소를 가져옵니다.
-        geocoder.coordToAddress(lng, lat, function(status, response) {
-            if (status === naver.maps.Service.Status.ERROR) {
-                return alert('Something went wrong!');
-            }
-
-            var item = response.v2.address;
-            var address = item.jibunAddress;
-            document.getElementById('result').innerHTML = '주소: ' + address;
-
-            // 주소를 console에 출력
-            console.log("주소: " + address);
-        });
-    }, function(error) {
-        console.error('Error occurred: ' + error.message);
+        <script type="text/javascript">
+  // 페이지 로딩 완료 후 실행
+  document.addEventListener("DOMContentLoaded", function() {
+    // 네이버 지도 객체 생성
+    var map = new naver.maps.Map("map", {
+      center: new naver.maps.LatLng(37.566826, 126.9786567),
+      zoom: 10
     });
-});
+
+    // Geocoder 객체 생성
+    var geocoder = new naver.maps.Service.Geocoder();
+
+    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+    if ("geolocation" in navigator) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude, // 위도
+          lon = position.coords.longitude; // 경도
+
+        // 좌표를 주소로 변환
+        geocoder.coordToAddress(lon, lat, function(status, response) {
+          if (status === naver.maps.Service.Status.ERROR) {
+            return console.log("Geocoding Error: ", status);
+          }
+
+          var result = response.result,
+            item = result.items[0],
+            addr = item.address;
+          console.log("현재 위치 주소: " + addr);
+        });
+      });
+    } else {
+      alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.");
+    }
+  });
 </script>
+
         <script>
             var mapOptions = {
                 center: new naver.maps.LatLng(37.5665, 126.9780), // 초기 위치: 서울시청
