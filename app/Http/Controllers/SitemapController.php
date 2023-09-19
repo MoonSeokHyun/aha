@@ -74,6 +74,14 @@ class SitemapController extends Controller
         $sitemap = view('sitemap', ['urls' => $urls])->render();
         $compressed = gzencode($sitemap, 9);
         $filePath = public_path("sitemap{$fileCount}.xml.gz");
-        file_put_contents($filePath, $compressed);
+        
+        if (file_put_contents($filePath, $compressed) === false) {
+            throw new \Exception('Failed to write the sitemap file.');
+        }
+        
+        // 권한 설정
+        if (chmod($filePath, 0666) === false) {
+            throw new \Exception('Failed to set permissions on the sitemap file.');
+        }
     }
 }
