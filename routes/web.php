@@ -5,6 +5,7 @@ use App\Http\Controllers\GameResultController;
 use App\Http\Controllers\ChildcareCenterController;
 use App\Http\Controllers\KindergartenController;
 use App\Http\Controllers\AcademyInfoController;
+use App\Http\Controllers\SitemapController;
 
 Route::get('/', function () {
     return view('welcome');
