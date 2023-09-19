@@ -75,6 +75,7 @@ class SitemapController extends Controller
         $compressed = gzencode($sitemap, 9);
         $filePath = public_path("sitemap{$fileCount}.xml.gz");
         
+        error_log("Writing to path: " . $filePath);
         if (file_put_contents($filePath, $compressed) === false) {
             throw new \Exception('Failed to write the sitemap file.');
         }
