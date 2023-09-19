@@ -8,23 +8,11 @@
                 <div class="text-center text-white">
                     <!-- Page heading-->
                     <h1 class="mb-5">각종 교육기관에 대한 정보를 검색해주세요!</h1>
-                    <!-- Signup form-->
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- * * SB Forms Contact Form * *-->
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- This form is pre-integrated with SB Forms.-->
-                    <!-- To make this form functional, sign up at-->
-                    <!-- https://startbootstrap.com/solution/contact-forms-->
-                    <!-- to get an API token!-->
-                    <form class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
-                        <!-- Email address input-->
-                        <div class="row">
-                            <div class="col">
-                                <input class="form-control form-control-lg" id="emailAddress" type="email" placeholder="교육 기관 이름 검색" data-sb-validations="required,email" />
-                            </div>
-                            <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Search</button></div>
-                        </div>
-                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                    <form class="form-subscribe" action="/search/results" method="post">
+                        @csrf
+                        <input class="form-control form-control-lg" name="academy_name" type="text" placeholder="교육 기관 이름 검색" />
+                        <button class="d-none" type="submit">Search</button>
+                        <div class="col-auto"> <button class="btn btn-primary btn-lg" type="submit">Search</button></div>
                     </form>
                 </div>
             </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\ChildcareCenterController;
 use App\Http\Controllers\KindergartenController;
 use App\Http\Controllers\AcademyInfoController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\SearchController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,3 +41,7 @@ Route::get('/academy_info/{id}', [AcademyInfoController::class, 'show']);
 
 // Sitemap
 Route::get('/sitemap.xml.gz', [SitemapController::class, 'index']);
+
+// Search
+
+Route::post('/search/results', [SearchController::class, 'search']);
