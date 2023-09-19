@@ -59,27 +59,41 @@
 
 
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var mapOptions = {
-                    center: new naver.maps.LatLng(37.566826, 126.9786567),
-                    zoom: 10
-                };
+document.addEventListener('DOMContentLoaded', function() {
+    // 현재 위치를 가져옵니다.
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude,
+            lng = position.coords.longitude;
+        
+        // 좌표를 console에 출력
+        console.log("Latitude: " + lat + ", Longitude: " + lng);
 
-                var map = new naver.maps.Map('map', mapOptions);
-                var geocoder = new naver.maps.Service.Geocoder();
+        var mapOptions = {
+            center: new naver.maps.LatLng(lat, lng),
+            zoom: 10
+        };
 
-                geocoder.coordToAddress(126.9786567, 37.566826, function(status, response) {
-                    if (status === naver.maps.Service.Status.ERROR) {
-                        return alert('Something went wrong!');
-                    }
+        var map = new naver.maps.Map('map', mapOptions);
+        var geocoder = new naver.maps.Service.Geocoder();
 
-                    var item = response.v2.address;
-                    var address = item.jibunAddress;
-                    document.getElementById('result').innerHTML = '주소: ' + address;
-                });
-            });
-        </script>   
+        // Naver 리버스 지오코딩 API를 사용하여 좌표로부터 주소를 가져옵니다.
+        geocoder.coordToAddress(lng, lat, function(status, response) {
+            if (status === naver.maps.Service.Status.ERROR) {
+                return alert('Something went wrong!');
+            }
 
+            var item = response.v2.address;
+            var address = item.jibunAddress;
+            document.getElementById('result').innerHTML = '주소: ' + address;
+
+            // 주소를 console에 출력
+            console.log("주소: " + address);
+        });
+    }, function(error) {
+        console.error('Error occurred: ' + error.message);
+    });
+});
+</script>
         <script>
             var mapOptions = {
                 center: new naver.maps.LatLng(37.5665, 126.9780), // 초기 위치: 서울시청
