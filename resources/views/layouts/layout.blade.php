@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta property="og:title" content="교육기관에 대한 정보는 EduRanking!">
+        <meta property="og:description" content="각종 교육기관에 대한 정보는 에듀랭킹">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://rangkingedu.shop/">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="각종 교육기관에 대한 정보는 에듀랭킹" />
