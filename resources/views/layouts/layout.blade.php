@@ -3,8 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
+        <meta name="description" content="각종 교육기관에 대한 정보는 에듀랭킹" />
         <meta name="author" content="" />
+        <meta name="naver-site-verification" content="0d05d100241430dd0cfaceba7d9515ef78177332" />
         @yield('meta')
         <title>@yield('title', '교육기관에 대한 정보는 EduRanking!')</title>
         <!-- Favicon-->
