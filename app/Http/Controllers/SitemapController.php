@@ -45,7 +45,7 @@ class SitemapController extends Controller
                 $count++;
                 $lastmod = $item->updated_at ? $item->updated_at->toAtomString() : now()->toAtomString();
                 $urls[] = [
-                    'loc' => url("/$pathSegment/" . $item->id),
+                    'loc' => 'https://rangkingedu.shop/' . $pathSegment . '/' . $item->id,
                     'lastmod' => $lastmod,
                     'changefreq' => 'weekly',
                     'priority' => '0.8',
