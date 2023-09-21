@@ -13,9 +13,17 @@
         </thead>
         <tbody>
             @foreach($kindergartens as $kindergarten)
-                <tr onclick="goToDetailPage({{ $kindergarten->id }})">
-                    <td>{{ $kindergarten->KindergartenName }}</td>
-                    <td>{{ $kindergarten->Address }}</td>
+                <tr>
+                    <td>
+                        <a href="/kindergartens/{{ $kindergarten->id }}">
+                            {{ $kindergarten->KindergartenName }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/kindergartens/{{ $kindergarten->id }}">
+                            {{ $kindergarten->Address }}
+                        </a>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -23,11 +31,6 @@
 </div>
 <div class="d-flex justify-content-center">
     {{ $kindergartens->links('pagination::bootstrap-4') }}
-    </div>
-<script>
-  function goToDetailPage(id) {
-    window.location.href = `/kindergartens/${id}`;
-  }
-</script>
+</div>
 
 @endsection
