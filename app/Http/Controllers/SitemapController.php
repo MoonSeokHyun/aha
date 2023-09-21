@@ -74,5 +74,7 @@ class SitemapController extends Controller
         $sitemap = view('sitemap', ['urls' => $urls])->render();
         $compressed = gzencode($sitemap, 9);
         $filePath = public_path("sitemap{$fileCount}.xml.gz");
+
+        file_put_contents($filePath, $compressed);
     }
 }
