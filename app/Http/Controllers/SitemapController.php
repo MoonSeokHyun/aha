@@ -9,10 +9,14 @@ class SitemapController extends Controller
 {
     public function index()
     {
-        // Sitemap 생성 작업을 Queue에 추가
-        Queue::push(new GenerateSitemap());
-
-        // 응답 메시지 반환
+        $totalDataCount = ChildcareCenter::count();
+        $chunkSize = 2000;  // Or any reasonable size to prevent timeout
+    
+        for ($i = 0; $i < $totalDataCount; $i += $chunkSize) {
+            $fileCount = ($i / $chunkSize) + 1;
+            Queue::push(new GenerateSitemap($fileCount, $i, $chunkSize));
+        }
+    
         return response()->json(['message' => 'Sitemap generation started.']);
     }
 }
