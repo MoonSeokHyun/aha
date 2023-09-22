@@ -1,68 +1,37 @@
-namespace App\Jobs;
+<?php
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+namespace App\Http\Controllers;
 
-class GenerateSitemap implements ShouldQueue
+use Illuminate\Support\Facades\Queue;
+use App\Jobs\GenerateSitemap;
+use App\Models\ChildcareCenter;
+use App\Models\Kindergarten;
+use App\Models\AcademyInfo;
+use App\Models\PublicServiceInfo;
+
+
+class SitemapController extends Controller
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    protected $model;
-    protected $fileCount;
-    protected $offset;
-    protected $limit;
-
-    public function __construct($model, $fileCount, $offset, $limit)
+    public function index()
     {
-        $this->model = $model;
-        $this->fileCount = $fileCount;
-        $this->offset = $offset;
-        $this->limit = $limit;
-    }
-
-    public function handle()
-    {
-        $sitemapIndex = [];
-        $query = $this->model::query()->offset($this->offset)->limit($this->limit);
-        $pathSegment = strtolower(class_basename($this->model));
-        $this->processData($query, $pathSegment, $sitemapIndex, $this->fileCount);
-
-        $sitemapIndexXml = view('sitemap_index', ['sitemaps' => $sitemapIndex])->render();
-        $filePath = public_path('sitemap_index.xml');
-        file_put_contents($filePath, $sitemapIndexXml);
-    }
-
-    private function processData($query, $pathSegment, &$sitemapIndex, $fileCount)
-    {
-        $urls = [];
-        $query->each(function ($item) use (&$urls, $pathSegment, $fileCount, &$sitemapIndex) {
-            $filePath = public_path("sitemap{$fileCount}.xml.gz");
-
-            if (file_exists($filePath)) {
-                return;
+        $models = [
+            ChildcareCenter::class,
+            Kindergarten::class,
+            AcademyInfo::class,
+            PublicServiceInfo::class
+        ];
+    
+        foreach ($models as $model) {
+            $totalDataCount = $model::count();
+            $chunkSize = 2000;
+    
+            for ($i = 0; $i < $totalDataCount; $i += $chunkSize) {
+                $fileCount = ($i / $chunkSize) + 1;
+                Queue::push(new GenerateSitemap($model, $fileCount, $i, $chunkSize));
             }
-
-            $lastmod = $item->updated_at ? $item->updated_at->toAtomString() : now()->toAtomString();
-            $urls[] = [
-                'loc' => 'https://rangkingedu.shop/' . $pathSegment . '/' . $item->id,
-                'lastmod' => $lastmod,
-                'changefreq' => 'weekly',
-                'priority' => '0.8',
-            ];
-        });
-
-        $this->writeSitemap($urls, $fileCount);
-        $sitemapIndex[] = url("sitemap{$fileCount}.xml.gz");
+        }
+    
+        return response()->json(['message' => 'Sitemap generation started.']);
     }
-
-    private function writeSitemap($urls, $fileCount)
-    {
-        $sitemap = view('sitemap', ['urls' => $urls])->render();
-        $compressed = gzencode($sitemap, 9);
-        $filePath = public_path("sitemap{$fileCount}.xml.gz");
-        file_put_contents($filePath, $compressed);
-    }
+    
 }
