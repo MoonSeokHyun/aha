@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Queue;
 use App\Jobs\GenerateSitemap;
+use App\Models\ChildcareCenter;
+use App\Models\Kindergarten;
+use App\Models\AcademyInfo;
+use App\Models\PublicServiceInfo;
+
 
 class SitemapController extends Controller
 {
