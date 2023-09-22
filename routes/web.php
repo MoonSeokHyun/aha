@@ -7,6 +7,7 @@ use App\Http\Controllers\KindergartenController;
 use App\Http\Controllers\AcademyInfoController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\PublicServiceInfoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,3 +46,7 @@ Route::get('/sitemap.xml.gz', [SitemapController::class, 'index']);
 // Search
 
 Route::post('/search/results', [SearchController::class, 'search']);
+
+// 식당
+Route::get('/public-service-info', [PublicServiceInfoController::class, 'index']);
+Route::get('/public-service-info/{publicServiceInfo}', [PublicServiceInfoController::class, 'show']);

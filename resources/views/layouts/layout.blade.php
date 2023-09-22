@@ -54,6 +54,9 @@
                 <li class="nav-item mx-2 mx-md-3 custom-nav-item">
                     <a class="nav-link custom-nav-link" href="/academy_info">학원</a>
                 </li>
+                <li class="nav-item mx-2 mx-md-3 custom-nav-item">
+                    <a class="nav-link custom-nav-link" href="/public-service-info">식당</a>
+                </li>
             </ul>
         </div>
     </div>
