@@ -7,13 +7,19 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Kindergarten Name</th>
-                <th scope="col">Address</th>
+                <th>ID</th>
+                <th scope="col">유치원</th>
+                <th scope="col">주소</th>
             </tr>
         </thead>
         <tbody>
             @foreach($kindergartens as $kindergarten)
                 <tr>
+                    <td>
+                        <a href="/kindergartens/{{ $kindergarten->id }}">
+                            {{ $kindergarten->id }}
+                        </a>
+                    </td>
                     <td>
                         <a href="/kindergartens/{{ $kindergarten->id }}">
                             {{ $kindergarten->KindergartenName }}
