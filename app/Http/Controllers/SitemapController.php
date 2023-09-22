@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ChildcareCenter;
 use App\Models\Kindergarten;
 use App\Models\AcademyInfo;
+use App\Models\PublicServiceInfo;
 use Illuminate\Http\Request;
 
 class SitemapController extends Controller
@@ -14,24 +15,27 @@ class SitemapController extends Controller
         $sitemapIndex = [];
         $fileCount = 1;
         $chunkSize = 20000;
-
+    
         // 어린이집 정보 추가
         $this->processData(ChildcareCenter::query(), 'childcare', $chunkSize, $sitemapIndex, $fileCount);
-
+    
         // 유치원 정보 추가
         $this->processData(Kindergarten::query(), 'kindergartens', $chunkSize, $sitemapIndex, $fileCount);
-
+    
         // 학원 정보 추가
         $this->processData(AcademyInfo::query(), 'academy_info', $chunkSize, $sitemapIndex, $fileCount);
-
+    
+        // PublicServiceInfo 정보 추가 (새로 추가된 부분)
+        $this->processData(PublicServiceInfo::query(), 'public-service-info', $chunkSize, $sitemapIndex, $fileCount); // PublicServiceInfo 모델을 여기에 추가
+    
         // 중복 제거
         $sitemapIndex = array_unique($sitemapIndex);
-
+    
         // Write sitemap index
         $sitemapIndexXml = view('sitemap_index', ['sitemaps' => $sitemapIndex])->render();
         $filePath = public_path('sitemap_index.xml');
         file_put_contents($filePath, $sitemapIndexXml);
-
+    
         return response()->file($filePath);
     }
 
