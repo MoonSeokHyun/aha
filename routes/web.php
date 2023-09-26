@@ -8,7 +8,7 @@ use App\Http\Controllers\AcademyInfoController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PublicServiceInfoController;
-
+use App\Http\Controllers\IndexController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -53,7 +53,5 @@ Route::get('/public-service-info', [PublicServiceInfoController::class, 'index']
 Route::get('/public-service-info/{publicServiceInfo}', [PublicServiceInfoController::class, 'show']);
 
 // 내 주변 식당 
-
-use App\Http\Controllers\IndexController;
 
 Route::get('/get_coordinates', [IndexController::class, 'getCoordinates']);

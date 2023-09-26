@@ -70,49 +70,53 @@
 </section>
 
 <div id="result"></div>
-<script type="text/javascript">
-    (function() {
-        var map = new naver.maps.Map("map", {
-            center: new naver.maps.LatLng(37.566826, 126.9786567),
-            zoom: 10
-        });
+    <script type="text/javascript">
+        (function() {
+            var map = new naver.maps.Map("map", {
+                center: new naver.maps.LatLng(37.566826, 126.9786567),
+                zoom: 10
+            });
 
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var lat = position.coords.latitude,
-                    lon = position.coords.longitude;
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude,
+                        lon = position.coords.longitude;
 
-                var location = new naver.maps.LatLng(lat, lon);
-                map.setCenter(location);
-                map.setZoom(15);
+                    var location = new naver.maps.LatLng(lat, lon);
+                    map.setCenter(location);
+                    map.setZoom(15);
 
-                new naver.maps.Marker({
-                    map: map,
-                    position: location
-                });
+                    new naver.maps.Marker({
+                        map: map,
+                        position: location
+                    });
 
-                // 서버에서 교육기관의 좌표를 가져오는 부분
-                fetch('/get_coordinates')
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(coord => {
-                        var education_location = new naver.maps.LatLng(coord.coordinateX, coord.coordinateY);
-                        
-                        // 거리 계산 (간단한 예시)
-                        var distance = naver.maps.geometry.spherical.computeDistanceBetween(location, education_location);
-                        
-                        if(distance <= 1000) {
-                            new naver.maps.Marker({
-                                map: map,
-                                position: education_location
-                            });
-                        }
+                    // Fetch coordinates from server
+                    fetch('/get_coordinates')
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(coord => {
+                            var education_location = new naver.maps.LatLng(coord.coordinateX, coord.coordinateY);
+                            
+                            // Calculate distance (for example, in meters)
+                            var distance = naver.maps.geometry.spherical.computeDistanceBetween(location, education_location);
+                            
+                            if(distance <= 1000) { // 1000 meters
+                                new naver.maps.Marker({
+                                    map: map,
+                                    position: education_location
+                                });
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Fetching coordinates failed", error);
                     });
                 });
-            });
-        } else {
-            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.");
-        }
-    })();
-</script>
+            } else {
+                alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.");
+            }
+        })();
+    </script>
+
         @endsection
