@@ -15,19 +15,12 @@ class SitemapController extends Controller
         $fileCount = 1;
         $chunkSize = 20000;
 
-        // 어린이집 정보 추가
         $this->processData(ChildcareCenter::query(), 'childcare', $chunkSize, $sitemapIndex, $fileCount);
-
-        // 유치원 정보 추가
         $this->processData(Kindergarten::query(), 'kindergartens', $chunkSize, $sitemapIndex, $fileCount);
-
-        // 학원 정보 추가
         $this->processData(AcademyInfo::query(), 'academy_info', $chunkSize, $sitemapIndex, $fileCount);
 
-        // 중복 제거
         $sitemapIndex = array_unique($sitemapIndex);
 
-        // Write sitemap index
         $sitemapIndexXml = view('sitemap_index', ['sitemaps' => $sitemapIndex])->render();
         $filePath = public_path('sitemap_index.xml');
         file_put_contents($filePath, $sitemapIndexXml);
@@ -61,7 +54,6 @@ class SitemapController extends Controller
             }
         });
 
-        // If there are remaining URLs that haven't been written, write them
         if ($count > 0) {
             $this->writeSitemap($urls, $fileCount);
             $sitemapIndex[] = url("sitemap{$fileCount}.xml.gz");
@@ -71,8 +63,9 @@ class SitemapController extends Controller
 
     private function writeSitemap($urls, $fileCount)
     {
+        $xmlHeader = '<?xml version="1.0" encoding="UTF-8"?>';
         $sitemap = view('sitemap', ['urls' => $urls])->render();
-        $compressed = gzencode($sitemap, 9);
+        $compressed = gzencode("{$xmlHeader}\n{$sitemap}", 9);
         $filePath = public_path("sitemap{$fileCount}.xml.gz");
 
         file_put_contents($filePath, $compressed);
