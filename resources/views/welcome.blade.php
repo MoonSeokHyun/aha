@@ -61,80 +61,58 @@
             </div>
         </div>
     </section>
-        <section>
-            <div style="text-align: center; margin-bottom: 20px;">
-                <h2>내 주변 교육기관 알아보기</h2>
-            </div>
-            <div id="map" style="width:100%;height:400px;"></div>
-        </section>
-        
+     <!-- 다른 섹션은 생략 -->
+<section>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h2>내 주변 교육기관 알아보기</h2>
+    </div>
+    <div id="map" style="width:100%;height:400px;"></div>
+</section>
 
-        <div id="result"></div>
-
-        <script type="text/javascript">
-  // 페이지 로딩 완료 후 실행
-  document.addEventListener("DOMContentLoaded", function() {
-    // 네이버 지도 객체 생성
-    var map = new naver.maps.Map("map", {
-      center: new naver.maps.LatLng(37.566826, 126.9786567),
-      zoom: 10
-    });
-
-    // Geocoder 객체 생성
-    var geocoder = new naver.maps.Service.Geocoder();
-
-    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
-    if ("geolocation" in navigator) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var lat = position.coords.latitude, // 위도
-          lon = position.coords.longitude; // 경도
-
-        // 좌표를 주소로 변환
-        geocoder.coordToAddress(lon, lat, function(status, response) {
-          if (status === naver.maps.Service.Status.ERROR) {
-            return console.log("Geocoding Error: ", status);
-          }
-
-          var result = response.result,
-            item = result.items[0],
-            addr = item.address;
-          console.log("현재 위치 주소: " + addr);
+<div id="result"></div>
+<script type="text/javascript">
+    (function() {
+        var map = new naver.maps.Map("map", {
+            center: new naver.maps.LatLng(37.566826, 126.9786567),
+            zoom: 10
         });
-      });
-    } else {
-      alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.");
-    }
-  });
-</script>
 
-        <script>
-            var mapOptions = {
-                center: new naver.maps.LatLng(37.5665, 126.9780), // 초기 위치: 서울시청
-                zoom: 11
-            };
-    
-            var map = new naver.maps.Map('map', mapOptions);
-    
-            // HTML5의 geolocation으로 사용할 수 있는지 확인합니다.
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var lat = position.coords.latitude,
-                        lon = position.coords.longitude;
-    
-                    var location = new naver.maps.LatLng(lat, lon);
-    
-                    map.setCenter(location); // 얻은 좌표를 지도의 중심으로 설정합니다.
-                    map.setZoom(15); // 지도의 줌 레벨을 변경합니다.
-    
-                    // 지도에 마커를 표시합니다.
-                    new naver.maps.Marker({
-                        map: map,
-                        position: location
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude,
+                    lon = position.coords.longitude;
+
+                var location = new naver.maps.LatLng(lat, lon);
+                map.setCenter(location);
+                map.setZoom(15);
+
+                new naver.maps.Marker({
+                    map: map,
+                    position: location
+                });
+
+                // 서버에서 교육기관의 좌표를 가져오는 부분
+                fetch('/get_coordinates')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(coord => {
+                        var education_location = new naver.maps.LatLng(coord.coordinateX, coord.coordinateY);
+                        
+                        // 거리 계산 (간단한 예시)
+                        var distance = naver.maps.geometry.spherical.computeDistanceBetween(location, education_location);
+                        
+                        if(distance <= 1000) {
+                            new naver.maps.Marker({
+                                map: map,
+                                position: education_location
+                            });
+                        }
                     });
                 });
-            } else {
-                alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
-            }
-        </script>
+            });
+        } else {
+            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.");
+        }
+    })();
+</script>
         @endsection
