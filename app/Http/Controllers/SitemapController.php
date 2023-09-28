@@ -21,9 +21,10 @@ class SitemapController extends Controller
 
         $sitemapIndex = array_values(array_unique($sitemapIndex)); // 중복 제거 및 재색인
 
+        $xmlHeader = '<?xml version="1.0" encoding="UTF-8"?>';
         $sitemapIndexXml = view('sitemap_index', ['sitemaps' => $sitemapIndex])->render();
         $filePath = public_path('sitemap_index.xml');
-        file_put_contents($filePath, $sitemapIndexXml);
+        file_put_contents($filePath, "{$xmlHeader}\n{$sitemapIndexXml}");
 
         return response()->file($filePath);
     }
