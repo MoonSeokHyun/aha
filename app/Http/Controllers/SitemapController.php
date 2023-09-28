@@ -19,7 +19,7 @@ class SitemapController extends Controller
         $this->processData(Kindergarten::query(), 'kindergartens', $chunkSize, $sitemapIndex, $fileCount);
         $this->processData(AcademyInfo::query(), 'academy_info', $chunkSize, $sitemapIndex, $fileCount);
 
-        $sitemapIndex = array_unique($sitemapIndex);
+        $sitemapIndex = array_values(array_unique($sitemapIndex)); // 중복 제거 및 재색인
 
         $sitemapIndexXml = view('sitemap_index', ['sitemaps' => $sitemapIndex])->render();
         $filePath = public_path('sitemap_index.xml');
