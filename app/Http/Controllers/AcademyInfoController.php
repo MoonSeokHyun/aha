@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AcademyInfo;  // <-- Make sure this line is here
 use Illuminate\Http\Request;
+use App\Models\AcademyInfo;
 
 class AcademyInfoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $academyInfos = AcademyInfo::paginate(15);
-        return view('academy.index', compact('academyInfos'));
-    }    
+        $query = AcademyInfo::query();
 
+        // 페이징 설정
+        $academyInfos = $query->paginate(15);
+
+        return view('academy.index', compact('academyInfos'));
+    }
+    
     public function show($id)
     {
         $academyInfo = AcademyInfo::find($id);

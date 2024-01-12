@@ -4,17 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kindergarten;
+
 class KindergartenController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $kindergartens = Kindergarten::paginate(15);
+        $query = Kindergarten::query();
+    
+        if ($request->has('region')) {
+            $query->where('address', 'like', '%' . $request->region . '%');
+        }
+    
+        // 페이징 설정
+        $kindergartens = $query->paginate(15);
+    
         return view('kindergarten.index', compact('kindergartens'));
     }
 
     public function show($id)
-{
-    $kindergarten = Kindergarten::find($id);
-    return view('kindergarten.show', ['kindergarten' => $kindergarten]);
-}
+    {
+        $kindergarten = Kindergarten::find($id);
+        return view('kindergarten.show', ['kindergarten' => $kindergarten]);
+    }
 }

@@ -2,40 +2,76 @@
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="text-center">Kindergartens</h1>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th class="text-center">ID</th>
-                <th scope="col" class="text-center">유치원</th>
-                <th scope="col" class="text-center">주소</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($kindergartens as $kindergarten)
-                <tr>
-                    <td class="text-center">
-                        <a href="/kindergartens/{{ $kindergarten->id }}">
-                            {{ $kindergarten->id }}
-                        </a>
-                    </td>
-                    <td class="text-center">
-                        <a href="/kindergartens/{{ $kindergarten->id }}">
-                            {{ $kindergarten->KindergartenName }}
-                        </a>
-                    </td>
-                    <td class="text-center">
-                        <a href="/kindergartens/{{ $kindergarten->id }}">
-                            {{ $kindergarten->Address }}
-                        </a>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-<div class="d-flex justify-content-center">
-    {{ $kindergartens->links('pagination::bootstrap-4') }}
-</div>
+    <input type="text" id="region" placeholder="Search by region">
+    <button onclick="searchByRegion()">Search</button>
 
+    <h1 class="text-center mb-4">학원 정보</h1>
+    <div id="post-data">
+        @if(isset($academyInfos))
+            @foreach($academyInfos as $info)
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $info->academy_name }}</h5>
+                    <p class="card-text">{{ $info->road_name_address }}</p>
+                    <a href="/academy_info/{{ $info->id }}" class="btn btn-primary">자세히 보기</a>
+                </div>
+            </div>
+            @endforeach
+        @endif
+    </div>
+    <!-- Laravel 기본 페이징 링크 표시 -->
+    <div class="pagination justify-content-center">
+        {{ $academyInfos->links() }}
+    </div>
+</div>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+var page = 1;
+
+function searchByRegion() {
+    const region = $('#region').val();
+    window.location.href = `?region=${region}`;
+}
+
+$(document).ready(function() {
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            page++;
+            loadMoreData(page);
+        }
+    });
+
+    function loadMoreData(page) {
+        $.ajax({
+            url: '?page=' + page,
+            type: 'get',
+            beforeSend: function() {
+                $('.ajax-load').show();
+            }
+        }).done(function(data) {
+            if(data.data.length === 0) {
+                $('.ajax-load').html("데이터가 더 이상 없습니다");
+                return;
+            }
+            $('.ajax-load').hide();
+            $("#post-data").append(renderData(data.data));
+        }).fail(function() {
+            alert('서버 응답이 없습니다.');
+        });
+    }
+
+    function renderData(data) {
+        var html = '';
+        for(var item of data) {
+            html += '<div class="card mb-3"><div class="card-body">';
+            html += `<h5 class="card-title">${item.academy_name}</h5>`;
+            html += `<p class="card-text">${item.road_name_address}</p>`;
+            html += `<a href="/academy_info/${item.id}" class="btn btn-primary">자세히 보기</a>`;
+            html += '</div></div>';
+        }
+        return html;
+    }
+});
+</script>

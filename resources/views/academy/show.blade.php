@@ -15,7 +15,6 @@
 @section('title', $simplified_address . ' ' . $academyInfo->academy_name . ' ' . $academyInfo->field_name)
 
 @section('content')
-@section('content')
     <h1>{{ $academyInfo->academy_name }}</h1>
     <table class="table table-bordered">
         <tr>
