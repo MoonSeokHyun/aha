@@ -10,6 +10,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PublicServiceInfoController;
 use App\Http\Controllers\IndexController;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -55,3 +56,8 @@ Route::get('/public-service-info/{publicServiceInfo}', [PublicServiceInfoControl
 // 내 주변 식당 
 
 Route::get('/get_coordinates', [IndexController::class, 'getCoordinates']);
+
+// ads.txt 라우트 추가
+Route::get('ads.txt', function () {
+    return "google.com, pub-6686738239613464, DIRECT, f08c47fec0942fa0";
+});
