@@ -15,10 +15,9 @@ class KindergartenController extends Controller
             $query->where('address', 'like', '%' . $request->region . '%');
         }
     
-        // 페이징 설정
-        $kindergartens = $query->paginate(15);
-    
-        return view('kindergarten.index', compact('kindergartens'));
+$kindergartens = $query->paginate(15);
+
+return view('kindergarten.index', compact('kindergartens'));
     }
 
     public function show($id)
